@@ -8,7 +8,7 @@ angular.module('jkuri.touchspin', [])
         right : 39
     };
 
-    var setScopeValues = function (scope) {
+    var setScopeValues = function (scope, initval) {
         scope.min = scope.min || 0;
         scope.max = scope.max || 100;
         scope.step = scope.step || 1;
@@ -17,8 +17,7 @@ angular.module('jkuri.touchspin', [])
         scope.decimals = scope.decimals || 0;
         scope.stepInterval = scope.stepInterval || 100;
         scope.stepIntervalDelay = scope.stepIntervalDelay || 500;
-        scope.initval = scope.initval || '';
-        scope.val = scope.value || scope.initval;
+        scope.val = scope.value || parseFloat(scope.initval).toFixed(scope.decimals);
     };
 
     return {
@@ -115,8 +114,8 @@ angular.module('jkuri.touchspin', [])
             };
 
             scope.$watch('initval', function(newValue) {
-                if (newValue !== undefined && oldval === undefined) {
-                    setScopeValues(scope);
+                if (newValue !== undefined && !isNaN(parseFloat(newValue))) {
+                    setScopeValues(scope, newValue);
                     oldval = scope.val;
                     ngModel.$setViewValue(scope.val);
                     scope.focused = false;
