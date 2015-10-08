@@ -122,7 +122,7 @@ angular.module('jkuri.touchspin', [])
                 }
             });
 
-            $body.bind('keydown', function(event) {
+            /*$body.bind('keydown', function(event) {
                 if (!scope.focused) {
                     return;
                 }
@@ -138,7 +138,7 @@ angular.module('jkuri.touchspin', [])
                 }
 
                 scope.$apply();
-            });
+            });*/
 
         },
         template: 
