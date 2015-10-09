@@ -94,19 +94,13 @@ angular.module('jkuri.touchspin', [])
             };
 
             scope.checkValue = function () {
-                var val;
-
-                if (scope.val !== '' && !scope.val.match(/^-?(?:\d+|\d*\.\d+)$/i)) {
-                    val = oldval !== '' ? parseFloat(oldval).toFixed(scope.decimals) : parseFloat(scope.min).toFixed(scope.decimals);
+                if (!scope.val.match(/^-?(?:\d+|\d*\.\d+)$/i)) {
+                    var val = oldval !== '' ? parseFloat(oldval).toFixed(scope.decimals) : parseFloat(scope.min).toFixed(scope.decimals);
                     scope.val = val;
                     ngModel.$setViewValue(val);
+                } else {
+                    ngModel.$setViewValue(parseFloat(scope.val));
                 }
-
-                scope.focused = false;
-            };
-
-            scope.focus = function () {
-                scope.focused = true;
             };
 
             ngModel.$render = function () {
@@ -118,28 +112,8 @@ angular.module('jkuri.touchspin', [])
                     setScopeValues(scope, newValue);
                     oldval = scope.val;
                     ngModel.$setViewValue(scope.val);
-                    scope.focused = false;
                 }
             });
-
-            /*$body.bind('keydown', function(event) {
-                if (!scope.focused) {
-                    return;
-                }
-
-                event.preventDefault();
-
-                var which = event.which;
-
-                if (which === key_codes.right) {
-                    scope.increment();
-                } else if (which === key_codes.left) {
-                    scope.decrement();
-                }
-
-                scope.$apply();
-            });*/
-
         },
         template: 
         '<div class="input-group">' +
@@ -147,7 +121,7 @@ angular.module('jkuri.touchspin', [])
         '    <button class="btn btn-default" ng-mousedown="startSpinDown()" ng-mouseup="stopSpin()"><i class="fa fa-minus"></i></button>' +
         '  </span>' +
         '  <span class="input-group-addon" ng-show="prefix" ng-bind="prefix"></span>' +
-        '  <input type="text" ng-model="val" class="form-control" ng-blur="checkValue()" ng-focus="focus()">' +
+        '  <input type="text" ng-model="val" class="form-control" ng-blur="checkValue()">' +
         '  <span class="input-group-addon" ng-show="postfix" ng-bind="postfix"></span>' +
         '  <span class="input-group-btn" ng-show="!verticalButtons">' +
         '    <button class="btn btn-default" ng-mousedown="startSpinUp()" ng-mouseup="stopSpin()"><i class="fa fa-plus"></i></button>' +
