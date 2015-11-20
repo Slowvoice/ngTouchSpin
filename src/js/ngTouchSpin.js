@@ -24,7 +24,7 @@ angular.module('jkuri.touchspin', [])
             var timeout, timer, helper = true, clickStart;
 
             scope.decrement = function () {
-                var newvalue = parseFloat(scope.val) - scope.step;
+                var newvalue = parseFloat(scope.val) - parseFloat(scope.step);
 
                 if (newvalue < scope.min) {
                     scope.val = scope.min.toFixed(scope.decimals);
@@ -36,7 +36,7 @@ angular.module('jkuri.touchspin', [])
             };
 
             scope.increment = function () {
-                var newvalue = parseFloat(scope.val) + scope.step;
+                var newvalue = parseFloat(scope.val) + parseFloat(scope.step);
 
                 if (newvalue > scope.max) {
                     scope.val = scope.max.toFixed(scope.decimals);
@@ -113,7 +113,7 @@ angular.module('jkuri.touchspin', [])
             };
 
             scope.$watch('initval', function(newValue, oldValue) {
-                if (newValue !== undefined && !isNaN(parseFloat(newValue)) && isNaN(parseFloat(oldValue))) {
+                if (newValue !== undefined && !isNaN(parseFloat(newValue)) && (isNaN(parseFloat(oldValue)) || (parseFloat(oldValue) == parseFloat(newValue)))) {
                     setScopeValues(scope, newValue);
                 }
             });
