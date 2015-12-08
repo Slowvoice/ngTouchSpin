@@ -4,8 +4,8 @@ angular.module('jkuri.touchspin', [])
     'use strict';
 
     var setScopeValues = function (scope, initval) {
-        scope.min = parseFloat(scope.min) || 0;
-        scope.max = parseFloat(scope.max) || 100;
+        scope.min = parseFloat(scope.min) || 1;
+        scope.max = parseFloat(scope.max) || 99;
         scope.step = parseFloat(scope.step) || 1;
         scope.prefix = scope.prefix || undefined;
         scope.postfix = scope.postfix || undefined;
@@ -90,15 +90,13 @@ angular.module('jkuri.touchspin', [])
                     var newvalue = parseFloat(scope.val);
 
                     if (newvalue < scope.min) {
-                        scope.val = scope.min.toFixed(scope.decimals);
-                        return;
+                        newvalue = scope.min;
                     } else if (newvalue > scope.max) {
-                        scope.val = scope.max.toFixed(scope.decimals);
-                        return;
-                    }
-
+                        newvalue = scope.max;
+                    } 
                     scope.val = newvalue.toFixed(scope.decimals);
                     scope.oldval = newvalue;
+                    scope.$emit('estimateEdit', newvalue);
                 }
             };
 
