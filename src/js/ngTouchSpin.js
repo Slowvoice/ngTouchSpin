@@ -9,6 +9,7 @@ angular.module('jkuri.touchspin', [])
         scope.step = parseFloat(scope.step) || 1;
         scope.prefix = scope.prefix || undefined;
         scope.postfix = scope.postfix || undefined;
+        scope.tabIndex = scope.tabIndex || 1;
         scope.decimals = parseFloat(scope.decimals) || 0;
         scope.stepInterval = scope.stepInterval || 100;
         scope.stepIntervalDelay = scope.stepIntervalDelay || 500;
@@ -18,7 +19,7 @@ angular.module('jkuri.touchspin', [])
 
     return {
         restrict: 'E',
-        scope: { min: '@?', max: '@?', step: '@?', prefix: '@?', postfix: '@?', decimals: '@?', stepInterval: '@?', stepIntervalDelay: '@?', initval: '@?', value: '@?' },
+        scope: { min: '@?', max: '@?', step: '@?', prefix: '@?', postfix: '@?', decimals: '@?', stepInterval: '@?', stepIntervalDelay: '@?', initval: '@?', value: '@?', tabIndex: '@?' },
         replace: true,
         link: function (scope, element, attrs, ngModel) {
             var timeout, timer, helper = true, clickStart;
@@ -119,13 +120,13 @@ angular.module('jkuri.touchspin', [])
         template: 
         '<div class="input-group">' +
         '  <span class="input-group-btn" ng-show="!verticalButtons">' +
-        '    <button class="btn btn-default" ng-mousedown="startSpinDown()" ng-mouseup="stopSpin()"><i class="fa fa-minus"></i></button>' +
+        '    <button class="btn btn-default" ng-mousedown="startSpinDown()" ng-mouseup="stopSpin()"><i class="fa fa-minus" tabindex="{{tabIndex}}"></i></button>' +
         '  </span>' +
         '  <span class="input-group-addon" ng-show="prefix" ng-bind="prefix"></span>' +
-        '  <input type="text" ng-model="val" class="form-control" ng-blur="checkValue()" ng-keyup="keyup($event)">' +
+        '  <input type="text" ng-model="val" class="form-control" ng-blur="checkValue()" ng-keyup="keyup($event)"  tabindex="{{tabIndex+1}}">' +
         '  <span class="input-group-addon" ng-show="postfix" ng-bind="postfix"></span>' +
         '  <span class="input-group-btn" ng-show="!verticalButtons">' +
-        '    <button class="btn btn-default" ng-mousedown="startSpinUp()" ng-mouseup="stopSpin()"><i class="fa fa-plus"></i></button>' +
+        '    <button class="btn btn-default" ng-mousedown="startSpinUp()" ng-mouseup="stopSpin()"><i class="fa fa-plus"  tabindex="{{tabIndex+2}}"></i></button>' +
         '  </span>' +
         '</div>'
     };
