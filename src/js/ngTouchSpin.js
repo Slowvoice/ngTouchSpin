@@ -4,8 +4,8 @@ angular.module('jkuri.touchspin', [])
     'use strict';
 
     var setScopeValues = function (scope, initval) {
-        scope.min = parseFloat(scope.min) || 1;
-        scope.max = parseFloat(scope.max) || 99;
+        scope.min = parseFloat(scope.min) || -Number.MAX_VALUE;
+        scope.max = parseFloat(scope.max) || Number.MAX_VALUE;
         scope.step = parseFloat(scope.step) || 1;
         scope.prefix = scope.prefix || undefined;
         scope.postfix = scope.postfix || undefined;
